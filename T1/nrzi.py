@@ -19,5 +19,15 @@ class NRZI():
         if sinal[0] == "+":
             result += "1"
         elif sinal[0] == "-":
-            result += "-"
-        return 0
+            result += "0"
+
+        for i in range(1,len(sinal)):
+            if sinal[i] == sinal[i-1]:
+                result += "0"
+            elif sinal[i-1] == "-" and sinal[i] == "+":
+                result += "1"
+            elif sinal[i-1] == "+" and sinal[i] == "-":
+                result += "1"
+            
+        result = hex(int(result, 2)) 
+        print(result)
