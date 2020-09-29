@@ -1,11 +1,19 @@
 Trabalho 1 - Descrição
-O trabalho consiste na implementação de um codificador/decodificador para as técnicas NRZ-I, Manchester Diferencial, HDB3, 8B6T, 6B/8B.
+O trabalho consiste na implementação de um codificador/decodificador para as técnicas:
+1) NRZ-I - polar
+2) Manchester Diferencial - polar
+3) HDB3 - 
+4) 8B/6T - mulilevel
+5) 6B/8B - 
 OBS:
 O decodificador deverá indicar a existência de erros, quando permitir sua detecção
 O sinal no NRZ-I e do Manchester Diferencial deve começar em negativo (-)
-No HDB3 deve ser considerado que o próximo sinal a ser enviado é positivo (+) (pulso anterior é negativo) e a diferença entre positivos e negativos inicial é igual a 0
+No HDB3 deve ser considerado que o próximo sinal a ser enviado é positivo (+) (pulso anterior é negativo) 
+e a diferença entre positivos e negativos inicial é igual a 0
 A técnica 6B/8B deve utilizar o codificador NRZ-I após a conversão de 6 para 8 bits
-Ambos programas (codificador e decodificador) devem ser executados em linha de comando (sem GUI ou execução via IDE). O codificador deve ser executado da seguinte forma:
+Ambos programas (codificador e decodificador) devem ser executados em linha de comando (sem GUI ou execução via IDE).
+
+O codificador deve ser executado da seguinte forma:
 $ codificador <técnica> <dados_hexa>
 Onde:
 <técnica> pode ser nrzi, mdif, hdb3, 8b6t ou 6b8b
