@@ -19,7 +19,6 @@ def main(technique, binary):
 
 
 data  = sys.argv
-print(data)
 hexaLen = len(data[2])
 binary = bin(int(data[2], 16))
 binary = binary[2:] + ""
