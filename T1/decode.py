@@ -7,7 +7,8 @@ import sys
 
 def main(technique, sinal):
     if technique == "nrzi":
-        NRZI.decode(sinal)
+        result = NRZI.decode(sinal)
+        print(result)
     elif technique == "mdif":
         MDIF.decode(sinal)
     elif technique == "hdb3":

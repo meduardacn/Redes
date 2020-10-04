@@ -30,4 +30,4 @@ class NRZI():
                 result += '1'
             
         result = hex(int(result, 2)) 
-        print(result)
+        return(result)
