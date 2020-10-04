@@ -17,12 +17,18 @@ class EightB6T():
         result = ""
         resultPlus = 0
         resultMinus = 0
+        valuePlus = 0
+        valueMinus = 0
         for i in range(0,n):
             key = hexa[i*2:(i+1)*2]
-            if resultMinus != resultPlus:
-                value = table[key]
+            value = table[key]
+            valuePlus = value.count('+')
+            valueMinus = value.count('-')
+            moreMinus = (resultMinus > resultPlus and valueMinus > valuePlus)
+            morePlus = (resultMinus < resultPlus and valueMinus < valuePlus)
+            if morePlus or moreMinus :
                 newValue = ''
-                for elem in newValue:
+                for elem in value:
                     if elem == '+':
                         newValue += '-'
                     elif elem == '-':
@@ -32,12 +38,10 @@ class EightB6T():
                 result += newValue
                 resultMinus += newValue.count('-')
                 resultPlus += newValue.count('+')
-                print(resultMinus,resultPlus)
             else:
                 result += table[key]
                 resultMinus += table[key].count('-')
                 resultPlus += table[key].count('+')
-                print(resultMinus,resultPlus)
         print(result)  
 
     def decode():
