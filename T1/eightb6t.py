@@ -9,8 +9,17 @@ class EightB6T():
             table[value[0]] = value[1]
         return(table)
 
+    def invertedTable():
+        f = open("eightb6t.txt", "r")
+        text = f.read()
+        text = text.split("\n")
+        table = dict()
+        for elem in text:
+            value = elem.split(" ")
+            table[value[1]] = value[0]
+        return(table)
+
     def encode(hexa):
-        print(hexa)
         table = EightB6T.table()
         i = 0
         n = int(len(hexa)/2)
@@ -44,5 +53,28 @@ class EightB6T():
                 resultPlus += table[key].count('+')
         print(result)  
 
-    def decode():
-        return 0
+    def decode(sinal):
+        table = EightB6T.invertedTable()
+        i = 0
+        n = int(len(sinal)/6)
+        result = ''
+        for i in range(0,n):
+            key = sinal[i*6:(i+1)*6]
+            try:
+                value = table[key]
+                result += value
+            except:
+                newKey = ''
+                for elem in key:
+                    if elem == '+':
+                        newKey += '-'
+                    elif elem == '-':
+                        newKey += '+'
+                    elif elem == '0':
+                        newKey += '0'
+                try:
+                    value = table[newKey]
+                    result += value
+                except:
+                    print("ERRO")
+        print(result)
