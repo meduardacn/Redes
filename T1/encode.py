@@ -5,7 +5,7 @@ from eightb6t import EightB6T
 from sixb8b import SixB8B
 import sys 
 
-def main(technique, binary):
+def main(technique, binary, hexa):
     if technique == "nrzi":
         NRZI.encode(binary)
     elif technique == "mdif":
@@ -13,7 +13,7 @@ def main(technique, binary):
     elif technique == "hdb3":
         HDB3.encode(binary)
     elif technique == "8b6t":
-        EightB6T.encode(binary)
+        EightB6T.encode(hexa)
     elif technique == "6b8b":
         SixB8B.encode(binary)
 
@@ -25,4 +25,4 @@ binary = binary[2:] + ""
 while len(binary) < hexaLen*4:
     binary = "0" + binary
 
-main(data[1],binary)
+main(data[1],binary,data[2])
