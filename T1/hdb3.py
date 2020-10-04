@@ -42,6 +42,7 @@ class HDB3():
         verifyBit = '-'
         i = 0
         result = ['|' for _ in range(len(sinal))]
+
         for i in range(0,len(sinal)):   
             if sinal[i] != '0':
                 result[i] = '1'
@@ -49,28 +50,22 @@ class HDB3():
                 result[i] = '0'
         change = 0
         for i in range(0,len(sinal)):
-            if change == 1:
-                change = 0
-                continue
-            if result[i] == '1':
-                countZero = 0
             if result[i] == '0':
                 countZero += 1
-                print(sinal[:i+1])
-                if countZero == 3 and (sinal[i+1] == sinal[i-3]):
-                    print("eae")
-                    change = 1
-                    result[i+1] = '0'
-                    countZero = 0
-                elif countZero == 2:
-                    print("entre")
-                    change = 1
-                    if sinal[i-3] == sinal[i+1]:
-                        result[i+1] = '0'
-                        result[i-2] = '0'
-                    countZero = 0
-                
+            elif result[i] == '1':
+                print(countZero)
+                if countZero == 2:
+                    print("entre",sinal[i-3],sinal[i])
+                    if sinal[i-3] == sinal[i]:
+                        result[i] = '0'
+                        result[i-3] = '0'
+                elif countZero == 3:
+                    print("eae",sinal[i-4], sinal[i])
+                    if sinal[i-4] == sinal[i]:
+                        result[i] = '0'
+                countZero = 0
         resultStr = ''
         for elem in result:
             resultStr += elem
-        print(resultStr)
+        result = hex(int(resultStr, 2)) 
+        print(result)
