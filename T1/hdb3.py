@@ -51,7 +51,6 @@ class HDB3():
             if result[i] == '0':
                 countZero += 1
             elif result[i] == '1':
-                print(countZero)
                 if countZero == 2:
                     if sinal[i-3] == sinal[i]:
                         result[i] = '0'
