@@ -16,7 +16,10 @@ def main(word):
                 countOne += 1
         bcc += str(countOne%2)
     binElem.append(bcc)
-    print(binElem)
+    result = ""
+    for elem in binElem:
+        result +=  hex(int(elem, 2))[2:]
+    print(result.upper())
 
 
 
