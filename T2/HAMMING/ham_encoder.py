@@ -6,9 +6,11 @@ def Log2(x):
         return False
     return (math.log10(x) /
             math.log10(2))
+
 def isPowerOfTwo(n):
     return (math.ceil(Log2(n)) ==
             math.floor(Log2(n)))
+
 def encode(letter):
     asciiElem = ord(letter)                    # ascii => int
     binWord = bin(asciiElem)[2:]               # int => binary
@@ -56,4 +58,3 @@ def main(word):
     print(result)
 data = sys.argv
 main(data[1])
-
