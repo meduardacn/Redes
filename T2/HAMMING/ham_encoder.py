@@ -9,24 +9,20 @@ def Log2(x):
 def isPowerOfTwo(n):
     return (math.ceil(Log2(n)) ==
             math.floor(Log2(n)))
-
-def main(word):
-    asciiElem = [ord(ele) for sub in word for ele in sub]   # ascii => int
-    binWord = ""
-    for elem in asciiElem:
-        binWord += bin(elem)[2:]                # int => binary
-    binWord = binWord[::-1]                     # reverse binary word
+def encode(letter):
+    asciiElem = ord(letter)                    # ascii => int
+    binWord = bin(asciiElem)[2:]               # int => binary
+    binWord = binWord[::-1]                    # reverse binary word
    
     i, hammingSpots , hammingWord = 0, 0, ""    
-    while i-hammingSpots < len(binWord):        # find places to add hamming spots
+    while i-hammingSpots < len(binWord):       # find places to add hamming spots
         i += 1
         if isPowerOfTwo(i):
             hammingWord+= "_"
             hammingSpots += 1
         else:
             hammingWord += binWord[i-hammingSpots-1]
-
-    onesPositions = []              
+    onesPositions = []
     for i in range(0, len(hammingWord)):        # find all places that have 1
         if hammingWord[i] == '1':
             onesPositions.append(i+1)           # add one to the position
@@ -51,9 +47,13 @@ def main(word):
             resultMessage += hammingWord[i]
 
     resultMessage = resultMessage[::-1]     # the reverse message of result binary
-    print(resultMessage)
-    print(hex(int(resultMessage, 2))[2:].upper())
+    return(hex(int(resultMessage, 2))[2:].upper())
 
+def main(word):
+    result = ""
+    for elem in word:
+        result+= encode(elem)
+    print(result)
 data = sys.argv
 main(data[1])
-# 1100001
+
