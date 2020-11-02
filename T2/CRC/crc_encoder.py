@@ -29,4 +29,7 @@ def main(word,binaryGenerator):
     print(result)
 
 data  = sys.argv
-main(data[1],data[2])
+if len(data[2]) == 5:
+    main(data[1],data[2])
+else:
+    print("ERRO")
