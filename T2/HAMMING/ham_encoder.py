@@ -13,35 +13,40 @@ def isPowerOfTwo(n):
 
 def encode(letter):
     asciiElem = ord(letter)                    # ascii => int
-    binWord = bin(asciiElem)[2:]               # int => binary
-    binWord = binWord[::-1]                    # reverse binary word
-   
+    binLetter = bin(asciiElem)[2:]             # int => binary
+    binLetter = binLetter[::-1]                # reverse binary word
+    
+    # find places to add hamming spots
     i, hammingSpots , hammingWord = 0, 0, ""    
-    while i-hammingSpots < len(binWord):       # find places to add hamming spots
+    while i-hammingSpots < len(binLetter):       
         i += 1
         if isPowerOfTwo(i):
             hammingWord+= "_"
             hammingSpots += 1
         else:
-            hammingWord += binWord[i-hammingSpots-1]
+            hammingWord += binLetter[i-hammingSpots-1]
+    
+    # find all places that have '1'
     onesPositions = []
-    for i in range(0, len(hammingWord)):        # find all places that have 1
+    for i in range(0, len(hammingWord)):        
         if hammingWord[i] == '1':
-            onesPositions.append(i+1)           # add one to the position
-    onesPositions.reverse()
-
-    xorResult = onesPositions[0] ^ onesPositions[1] # make xor between all positions that have one
+            onesPositions.append(i+1)           
+    
+    # make xor between all positions that have one
+    xorResult = onesPositions[0] ^ onesPositions[1] 
     for i in range(2,len(onesPositions)):
         xorResult = xorResult ^ onesPositions[i]
     xorResult = bin(xorResult)[2:]
-
-    while len(xorResult) < hammingSpots:        # normalize binary
+    
+    # normalize binary
+    while len(xorResult) < hammingSpots:        
         xorResult = '0'+xorResult
     xorResult = xorResult[::-1]
-
+    
+    # fill in the hamming word with the xor result
     j = 0
     resultMessage = "" 
-    for i in range(0, len(hammingWord)):    # fill in the hamming word with the xor result
+    for i in range(0, len(hammingWord)):    
         if hammingWord[i] == '_':
             resultMessage += xorResult[j]
             j+= 1
@@ -56,5 +61,6 @@ def main(word):
     for elem in word:
         result+= encode(elem)
     print(result)
+
 data = sys.argv
 main(data[1])
