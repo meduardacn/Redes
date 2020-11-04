@@ -3,20 +3,20 @@ Este trabalho consiste em implementar codificadores e decodificadores para detec
 Os detalhes sobre a entrada e saída para cada técnica estão apresentados abaixo:<br />
 
 Os códigos devem ser executado da seguinte forma: <br />
-1. Redundância de bloco
+- 1. Redundância de bloco <br />
 Codificador: <br />
 $ python3 bcc_encoder.py [string em ASCII]  =>  [string codificada em formato hexadecimal]<br />
 Decodificador: <br />
 $ python3 bcc_decoder.py [código em hexadecimal] => [string em ASCII] ou "ERRO"
 
-2. CRC
+- 2. CRC <br />
 Codificador: <br />
 $ python3 crc_encoder.py [string em ASCII] [polinômio gerador de ordem 5 expresso em binário] => [string codificada em formato hexadecimal]
 Decodificador: <br />
 $ python3 crc_decoder.py [string codificada em formato hexadecimal] [polinômio gerador de ordem 5 expresso em binário] => [string em ASCII] e/ou "ERRO" <br />
 (OBS. São indicados os caracteres que tiveram erro na transmissão)
 
-3. Código de Hamming
+- 3. Código de Hamming <br />
 Codificador: <br />
 $ python3 ham_encoder.py [string em ASCII] => [string codificada em formato hexadecimal]
 Decodificador: <br />
