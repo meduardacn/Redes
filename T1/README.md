@@ -20,4 +20,4 @@ O Decodificador deve ser executado da seguinte forma:<br />
 $ python3 encode.py <técnica> <sinal><br />
 Onde:<br />
 <técnica> pode ser nrzi, mdif, hdb3, 8b6t ou 6b8b<br />
-<sinal> é o sinal que devem ser decodificado<br />
+<sinal > é o sinal que devem ser decodificado<br />
