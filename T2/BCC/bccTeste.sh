@@ -1,0 +1,12 @@
+python3 bcc_encoder.py redes # E4CAC9CAE7CA
+python3 bcc_decoder.py E4CAC9CAE7CA # redes
+python3 bcc_decoder.py E48AC9CAE7CA # ERRO
+python3 bcc_decoder.py E48A49CAE7CA # ERRO
+python3 bcc_encoder.py politecnica # E1DED8D2E8CAC6DDD2C6C3DB
+python3 bcc_decoder.py E1DED8D2E8CAC6DDD2C6C3DB # politecnica
+python3 bcc_decoder.py E1DED8D2E8CAC6DDD2E6C3DB # ERRO
+python3 bcc_decoder.py E15ED8D2E8CAC65DD2C6C3DB # ERRO
+python3 bcc_encoder.py hamming # D1C3DBDBD2DDCFD2
+python3 bcc_decoder.py D1C3DBDBD2DDCFD2 # hamming
+python3 bcc_decoder.py D1C3DBDBD2DFCFD2 # ERRO
+python3 bcc_decoder.py 51C3DFDBD2DDCFD2 # ERRO
