@@ -77,4 +77,5 @@ class EightB6T():
                     result += value
                 except:
                     print("ERRO")
+                    return
         print(result)

@@ -40,5 +40,5 @@ class MDIF():
             else:
                 result += '0'
             i += 2
-        result = hex(int(result, 2)) 
-        print(result)
+        result = hex(int(result, 2))[2:]
+        print(result.upper())

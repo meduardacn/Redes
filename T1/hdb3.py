@@ -62,5 +62,5 @@ class HDB3():
         resultStr = ''
         for elem in result:
             resultStr += elem
-        result = hex(int(resultStr, 2)) 
-        print(result)
+        result = hex(int(resultStr, 2))[2:]
+        print(result.upper())

@@ -63,12 +63,15 @@ class SixB8B():
             elif key[0:2] == '00' and disparity == 2:
                 result += key[2:]
             else:
-                result += table[key]
-        
-        result = hex(int(result, 2)) 
-        print(result)
+                try:
+                    result += table[key]
+                except:
+                    print('ERRO')
+                    return
+        result = hex(int(result, 2))[2:] 
+        print(result.upper())
 
-def hexaToBin(hexa):    
+def hexaToBin(hexa):     
     binary = bin(int(hexa, 16))
     binary = binary[2:] + ""   
     return binary

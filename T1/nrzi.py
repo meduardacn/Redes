@@ -29,5 +29,5 @@ class NRZI():
             elif sinal[i-1] == '+' and sinal[i] == '-':
                 result += '1'
             
-        result = hex(int(result, 2)) 
-        return(result)
+        result = hex(int(result, 2))[2:]
+        return(result.upper())
