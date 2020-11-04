@@ -12,8 +12,10 @@ def isPowerOfTwo(n):
 
 def decode(letter):
     binaryLetter = bin(int(letter, 16))[2:] # hexa => bin
-    binaryLetter = binaryLetter[::-1]       # reverse binary word
-
+    while len(binaryLetter) < 12:           #normalize binary
+        binaryLetter = "0"+ binaryLetter
+    binaryLetter = binaryLetter[::-1]       # reverse binary letter
+    
     # find all places that have '1'
     onesPositions = []
     for i in range(0, len(binaryLetter)):       
@@ -26,11 +28,15 @@ def decode(letter):
         xorResult = xorResult ^ onesPositions[i]
     
     # verify if have a  bit error and fix it
-    if xorResult != 0:          
-        if binaryLetter[xorResult-1] == '1':
-            binaryLetter = binaryLetter[:xorResult-1]+'0'+ binaryLetter[xorResult:]
-        else:
-            binaryLetter = binaryLetter[:xorResult-1]+'1'+ binaryLetter[xorResult:]
+    if xorResult != 0:    
+        print("tam bin", len(binaryLetter))
+        print("posição errada",xorResult-1)
+        if xorResult-1 < len(binaryLetter):    
+            if binaryLetter[xorResult-1] == '1':
+                
+                binaryLetter = binaryLetter[:xorResult-1]+'0'+ binaryLetter[xorResult:]
+            else:
+                binaryLetter = binaryLetter[:xorResult-1]+'1'+ binaryLetter[xorResult:]
     
     # clean  binary letter deleting hamming code
     i, letter = 0, ""

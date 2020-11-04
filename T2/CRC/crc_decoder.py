@@ -18,7 +18,7 @@ def decode(letter, binaryGenerator):
         i += 1 # atualiza indíce
     result = letterSlice[1:] # tira o primeiro bit o resultado do xor
     result = hex(int(result, 2))[2:] # transforma em hexa
-    if int(result) != 0:
+    if int(result,16) != 0:
         return "_" # em caso de erro
     else:
         return(chr(int(bin(int(letter[:-1], 16))[2:], 2))) #transforma em char
