@@ -24,28 +24,23 @@ def decode(letter):
     xorResult = onesPositions[0] ^ onesPositions[1] 
     for i in range(2,len(onesPositions)):
         xorResult = xorResult ^ onesPositions[i]
-    xorResult = bin(xorResult)[2:]
     
     # verify if have a  bit error and fix it
-    error = 0
-    if int(xorResult,2) != 0:          
-        error = int(xorResult,2)
-        if binaryLetter[error-1] == '1':
-            binaryLetter = binaryLetter[:error-1]+'0'+ binaryLetter[error:]
+    if xorResult != 0:          
+        if binaryLetter[xorResult-1] == '1':
+            binaryLetter = binaryLetter[:xorResult-1]+'0'+ binaryLetter[xorResult:]
         else:
-            binaryLetter = binaryLetter[:error-1]+'1'+ binaryLetter[error:]
+            binaryLetter = binaryLetter[:xorResult-1]+'1'+ binaryLetter[xorResult:]
     
     # clean  binary letter deleting hamming code
     i, letter = 0, ""
     while i < len(binaryLetter): 
         i += 1
         if not isPowerOfTwo(i):
-            letter += str(binaryLetter[i-1])
+            letter += binaryLetter[i-1]
 
-    # binary to char
-    letter = letter[::-1]         
-    letter = chr(int(letter,2))
-    return (letter, error)
+    # binary to char  
+    return (chr(int(letter[::-1],2)), xorResult)
 
 def main(hexa):
     result = ""

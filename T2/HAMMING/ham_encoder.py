@@ -12,8 +12,7 @@ def isPowerOfTwo(n):
             math.floor(Log2(n)))
 
 def encode(letter):
-    asciiElem = ord(letter)                    # ascii => int
-    binLetter = bin(asciiElem)[2:]             # int => binary
+    binLetter = bin(ord(letter))[2:]           # ascii => binary
     binLetter = binLetter[::-1]                # reverse binary word
     
     # find places to add hamming spots
@@ -36,7 +35,7 @@ def encode(letter):
     xorResult = onesPositions[0] ^ onesPositions[1] 
     for i in range(2,len(onesPositions)):
         xorResult = xorResult ^ onesPositions[i]
-    xorResult = bin(xorResult)[2:]
+    xorResult = bin(xorResult)[2:]             # int => binary
     
     # normalize binary
     while len(xorResult) < hammingSpots:        
@@ -44,8 +43,7 @@ def encode(letter):
     xorResult = xorResult[::-1]
     
     # fill in the hamming word with the xor result
-    j = 0
-    resultMessage = "" 
+    j, resultMessage = 0, "" 
     for i in range(0, len(hammingWord)):    
         if hammingWord[i] == '_':
             resultMessage += xorResult[j]
