@@ -1,5 +1,4 @@
-Trabalho 1 - Descrição
-O trabalho 1 consiste em implementar codificadores e decodificadores de sinal para as técnicas:
+Este trabalho consiste em implementar codificadores e decodificadores de sinal para as técnicas:
 1) NRZ-I 
 2) Manchester Diferencial 
 3) HDB3
