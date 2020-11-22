@@ -46,6 +46,7 @@ class Routertable:
         print("<" + self.name + "><" + str(self.dest_prefix) + "><" + str(self.nexthop) +
               "><" + str(self.port) + ">")
 
+#-------------------------------------------
 class ARP_Request_response:
     def __init__(self, src_name, MAC_src, MAC_dst, IP_dst, IP_src):
         self.src_name = src_name
@@ -55,7 +56,7 @@ class ARP_Request_response:
         self.IP_src    = IP_src
     def printResponse(self):
         print(self.src_name + " box " + self.src_name + " : ETH (src=" + self.MAC_src +
-              " dst=:FF) \ n ARP - Who has " + self.IP_dst + "? Tell " + self.IP_src + ";\n")
+              " dst=:FF) \\n ARP - Who has " + self.IP_dst + "? Tell " + self.IP_src + ";")
 
 class ARP_Reply_response:
     def __init__(self, src_name, dst_name, MAC_src, MAC_dst, IP_src):
@@ -67,8 +68,7 @@ class ARP_Reply_response:
 
     def printResponse(self):
         print(self.src_name + " => " + self.dst_name + " : ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
-              ") \ n ARP - " + self.IP_src + " is at " + self.MAC_src + ";\n")
-
+              ") \\n ARP - " + self.IP_src + " is at " + self.MAC_src + ";")
 
 class ICMP_Echo_Request_response:
     def __init__(self, src_name, dst_name, MAC_src, MAC_dst, IP_src, IP_dst, TTL, mf_flag, offset, data):
@@ -85,9 +85,8 @@ class ICMP_Echo_Request_response:
 
     def printResponse(self):
         print(self.src_name + " => " + self.dst_name + ": ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
-              ") \ n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) +  " mf="+ str(self.mf_flag) + " off=" + str(self.offset) + 
-              ") \ n ICMP - Echo request (data=" + self.data + "); \n")
-
+              ") \\n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) +  " mf="+ str(self.mf_flag) + " off=" + str(self.offset) + 
+              ") \\n ICMP - Echo request (data=" + self.data + "); ")
 
 class ICMP_Echo_Reply_response:
     def __init__(self, src_name, dst_name, MAC_src, MAC_dst, IP_src, IP_dst, TTL, mf_flag, offset, data):
@@ -104,8 +103,8 @@ class ICMP_Echo_Reply_response:
 
     def printResponse(self):
         print(self.src_name + " => " + self.dst_name + ": ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
-              ") \ n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) + " mf=" + str(self.mf_flag) + " off=" + str(self.offset) +
-              ") \ n ICMP - Echo reply (data=" + self.data + "); \n")
+              ") \\n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) + " mf=" + str(self.mf_flag) + " off=" + str(self.offset) +
+              ") \\n ICMP - Echo reply (data=" + self.data + "); ")
 
 
 #  < src_name > = > <dst_name > : ETH (src= < MAC_src > dst = < MAC_dst > ) \n IP (src= < IP_src > dst= < IP_dst > ttl= < TTL > mf= < mf_flag > off= < offset > ) \n ICMP - Echo reply (data= < msg > )
