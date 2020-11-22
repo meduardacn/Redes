@@ -15,14 +15,17 @@ R2 box R2 : ETH (src=:20 dst=:FF) \n ARP - Who has 20.0.0.2? Tell 20.0.0.1;     
 N3 => R2 : ETH (src=:03 dst=:20) \n ARP - 20.0.0.2 is at :03;                       # ARP reply
 R2 => N3 : ETH (src=:20 dst=:03) \n IP (src=10.0.0.2 dst=20.0.0.2 ttl=6 mf=1 off=0) \n ICMP - Echo request (data=hello);    # ICMP Echo Request
 R2 => N3 : ETH (src=:20 dst=:03) \n IP (src=10.0.0.2 dst=20.0.0.2 ttl=6 mf=0 off=5) \n ICMP - Echo request (data=world);    # ICMP Echo Request
-N3 rbox N3 : Received helloworld;                                                   # final do ICMP Echo Request
+N3 rbox N3 : Received helloworld;                               # final do ICMP Echo Request
+
 N3 => R2 : ETH (src=:03 dst=:20) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=8 mf=0 off=0) \n ICMP - Echo reply (data=helloworld); # ICMP Echo Reply
+
 R2 box R2 : ETH (src=:22 dst=:FF) \n ARP - Who has 100.10.30.2? Tell 100.10.30.1;   # ARP request
 R3 => R2 : ETH (src=:31 dst=:22) \n ARP - 100.10.30.2 is at :31;                    # ARP reply
 R2 => R3 : ETH (src=:22 dst=:31) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=hel);        # ICMP Echo Reply
 R2 => R3 : ETH (src=:22 dst=:31) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=7 mf=1 off=3) \n ICMP - Echo reply (data=low);        # ICMP Echo Reply
 R2 => R3 : ETH (src=:22 dst=:31) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=7 mf=1 off=6) \n ICMP - Echo reply (data=orl);        # ICMP Echo Reply
 R2 => R3 : ETH (src=:22 dst=:31) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=7 mf=0 off=9) \n ICMP - Echo reply (data=d);          # ICMP Echo Reply
+
 R3 box R3 : ETH (src=:32 dst=:FF) \n ARP - Who has 100.10.40.1? Tell 100.10.40.2;   # ARP request
 R1 => R3 : ETH (src=:12 dst=:32) \n ARP - 100.10.30.1 is at :12;                    # ARP reply
 R3 => R1 : ETH (src=:32 dst=:12) \n IP (src=20.0.0.2 dst=10.0.0.2 ttl=6 mf=1 off=0) \n ICMP - Echo reply (data=hel);        # ICMP Echo Reply

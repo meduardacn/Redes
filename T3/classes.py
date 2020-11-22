@@ -5,9 +5,12 @@ class Node:
         self.ip_prefix = ip_prefix
         self.mtu = mtu
         self.gateway = gateway
+        self.arp_table = []
 
-    def printNode(self):
+    def printElem(self):
         print("<" + self.name + "><" + str(self.mac) + "><" + str(self.ip_prefix) + "><" + str(self.mtu) + "><" + str(self.gateway) + ">")
+        for elem in self.arp_table:
+            print(elem)
 
 class Router:
     def __init__(self, name, num_ports, node_routers):
@@ -16,10 +19,12 @@ class Router:
         self.node_routers = node_routers
         self.arp_table = []
 
-    def printRouter(self):
+    def printElem(self):
         print("<" + self.name + "><" + str(self.num_ports) + ">")
         for elem in self.node_routers:
               elem.printNode_router()
+        for elem in self.arp_table:
+            print(elem)
 
 class Node_router:
     def __init__(self, mac, ip_prefix, mtu):
@@ -64,25 +69,44 @@ class ARP_Reply_response:
         print(self.src_name + " => " + self.dst_name + " : ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
               ") \ n ARP - " + self.IP_src + " is at " + self.MAC_src + ";\n")
 
-class ICMP_Echo_Request:
+
+class ICMP_Echo_Request_response:
     def __init__(self, src_name, dst_name, MAC_src, MAC_dst, IP_src, IP_dst, TTL, mf_flag, offset, data):
         self.src_name = src_name
         self.dst_name = dst_name
         self.MAC_src = MAC_src
         self.MAC_dst = MAC_dst
         self.IP_src = IP_src
-        self.IP_dest = IP_dst
+        self.IP_dst = IP_dst
         self.TTL = TTL
         self.mf_flag = mf_flag
         self.offset = offset
         self.data = data
 
     def printResponse(self):
-        print(self.src_name + " => " + self.dst_name + " : ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
-              ") \ n IP (src=" + self.IP_src + " dst=" + self.IP_dst + "  ttl=" + self.TTL +  " mf="+ self.mf_flag + " off=" + self.offset + 
-              ");\ n ICMP - Echo request (data=" + self.data + "); \n")
+        print(self.src_name + " => " + self.dst_name + ": ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
+              ") \ n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) +  " mf="+ str(self.mf_flag) + " off=" + str(self.offset) + 
+              ") \ n ICMP - Echo request (data=" + self.data + "); \n")
 
-        #Pacotes ICMP Echo Request: <src_name> => <dst_name> : ETH (src=<MAC_src> dst =<MAC_dst>) \n 
-        # IP (src=<IP_src> dst=<IP_dst> ttl=<TTL> mf=<mf_flag> off=<offset>) \n ICMP - Echo request (data=<msg>);
 
+class ICMP_Echo_Reply_response:
+    def __init__(self, src_name, dst_name, MAC_src, MAC_dst, IP_src, IP_dst, TTL, mf_flag, offset, data):
+        self.src_name = src_name
+        self.dst_name = dst_name
+        self.MAC_src = MAC_src
+        self.MAC_dst = MAC_dst
+        self.IP_src = IP_src
+        self.IP_dst = IP_dst
+        self.TTL = TTL
+        self.mf_flag = mf_flag
+        self.offset = offset
+        self.data = data
+
+    def printResponse(self):
+        print(self.src_name + " => " + self.dst_name + ": ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
+              ") \ n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) + " mf=" + str(self.mf_flag) + " off=" + str(self.offset) +
+              ") \ n ICMP - Echo reply (data=" + self.data + "); \n")
+
+
+#  < src_name > = > <dst_name > : ETH (src= < MAC_src > dst = < MAC_dst > ) \n IP (src= < IP_src > dst= < IP_dst > ttl= < TTL > mf= < mf_flag > off= < offset > ) \n ICMP - Echo reply (data= < msg > )
 
