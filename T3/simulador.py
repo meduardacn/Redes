@@ -1,8 +1,13 @@
+# python3 simulador.py b.txt N1 N3 helloworld
+# python3 simulador.py a.txt n1 n2 hello
+
 import sys
 from classes import Node
 from classes import Router
 from classes import Node_router
 from classes import Routertable
+from classes import ARP_Request_response
+from classes import ARP_Reply_response
 
 def readFile():
     global topologyFile
@@ -84,40 +89,55 @@ def ARPRequest():
     src_name, MAC_src, IP_src = sourceNode.name, sourceNode.mac, sourceNode.ip_prefix
     IP_dst = IP_dst.split("/")
     IP_src = IP_src.split("/")
-    ARPRequest = (src_name, MAC_src, IP_dst[0], IP_src[0])
-    print(src_name + " box " + src_name + " : ETH (src=" + MAC_src[-3:] +
-          " dst=:FF) \ n ARP - Who has " + IP_dst[0] + "? Tell " + IP_src[0] + ";\n")
-    ARPReply(ARPRequest)
+    response = ARP_Request_response(src_name, MAC_src[-3:], ":FF", IP_dst[0], IP_src[0])
+    response.printResponse()
+    return response
 
-def ARPReply(ARPRequest):
+def ARPReply(arp_request_response):
     global nodes
     global router
-    src_name = ARPRequest[0]
-    MAC_src = ARPRequest[1]
-    IP_dst = ARPRequest[2]
-
+    response = None
     # IP_dst ser o destino
     for elem in nodes:
         ip = elem.ip_prefix.split("/")
-        if ip[0] == IP_dst:
-            print(elem.name + " => " + src_name + " : ETH (src=" + elem.mac[-3:] + " dst=" + MAC_src[-3:] + 
-            ") \ n ARP - " + ip[0] + " is at " + elem.mac[-3:] + ";\n")
-            return 
+        if ip[0] == arp_request_response.IP_dst:
+            response = ARP_Reply_response(elem.name, arp_request_response.src_name, elem.mac[-3:], arp_request_response.MAC_src[-3:], ip[0] )
+            response.printResponse()
+            return(response)
     # IP_dst ser o gateway
     for elem in router:
         node_routers = elem.node_routers
         for port in node_routers:
             ip = port.ip_prefix.split("/")
-            print(ip[0],IP_dst)
-            if ip[0] == IP_dst:
-                print(elem.name + " => " + src_name + " : ETH (src=" + port.mac[-3:] + " dst=" + MAC_src[-3:] +
-                      ") \ n ARP - " + ip[0] + " is at " + port.mac[-3:] + ";\n")
-                return
+            if ip[0] == arp_request_response.IP_dst:
+                response = ARP_Reply_response(elem.name, arp_request_response.src_name, port.mac[-3:], arp_request_response.MAC_src[-3:], ip[0] )
+                response.printResponse()
+                return(response)
+
+def ICMP_EchoRequest(src_name, src_dest):
+    global source
+    global destiny
+
+
+
+def main():
+    global nodes
+    global router
+    global routertable
+
+    arp_request_response = ARPRequest()
+    arp_reply_response   = ARPReply(arp_request_response)
+    #
+    # Pacotes ICMP Echo Request: <src_name> => <dst_name> : ETH (src=<MAC_src> dst =<MAC_dst>) 
+    # IP (src=<IP_src> dst=<IP_dst> ttl=<TTL> mf=<mf_flag> off=<offset>) \n ICMP - Echo request (data=<msg>);
+    echo_request_response = ICMP_EchoRequest()
+
 
 data = sys.argv
 topologyFile, source, destiny, message = data[1], data[2], data[3], data[4]
 nodes, router, routertable = readFile()
-ARPRequest()
+
+main()
 
 # printTopology()  
 # ARP Request ok
