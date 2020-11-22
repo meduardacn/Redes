@@ -89,15 +89,14 @@ r1 box r1 : ETH (src=00:00:00:00:00:06 dst=FF:FF:FF:FF:FF:FF) \n ARP - Who has 1
 n3 => r1 : ETH (src=00:00:00:00:00:03 dst=00:00:00:00:00:06) \n ARP - 192.168.1.2 is at 00:00:00:00:00:03;
 r1 => n3 : ETH (src=00:00:00:00:00:06 dst=00:00:00:00:00:03) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=7 mf=1 off=0) \n ICMP - Echo request (data=hello);
 r1 => n3 : ETH (src=00:00:00:00:00:06 dst=00:00:00:00:00:03) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=7 mf=0 off=5) \n ICMP - Echo request (data=world);
-
 n3 rbox n3 : Received helloworld;
 n3 => r1 : ETH (src=00:00:00:00:00:03 dst=00:00:00:00:00:06) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=hello);
 n3 => r1 : ETH (src=00:00:00:00:00:03 dst=00:00:00:00:00:06) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=8 mf=0 off=5) \n ICMP - Echo reply (data=world);
 r1 => n1 : ETH (src=00:00:00:00:00:05 dst=00:00:00:00:00:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=hello);
 r1 => n1 : ETH (src=00:00:00:00:00:05 dst=00:00:00:00:00:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=0 off=5) \n ICMP - Echo reply (data=world);
 n1 rbox n1 : Received helloworld;
-Detalhes para construção do simulador:
 
+Detalhes para construção do simulador:
 o TTL inicial dos pacotes IP deve ser igual a 8
 o endereçamento das máquinas deverá utilizar o modelo sem classes (com CIDR)
 a topologia poderá apresentar loops no roteamento (deve finalizar com ICMP Time Exceeded)
