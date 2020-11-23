@@ -1,0 +1,262 @@
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo1.txt n1 n2 redes
+['simulador.py', 'topo1.txt', 'n1', 'n2', 'redes']
+n1 box n1 : ETH (src=:01 dst=:FF) \n ARP - Who has 10.0.0.2? Tell 10.0.0.1;
+n2 => n1 : ETH (src=:02 dst=:01) \n ARP - 10.0.0.2 is at :02;
+n1 => n2 : ETH (src=:01 dst=:02) \n IP (src=10.0.0.1 dst=10.0.0.2 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=redes); 
+n2 rbox n2 : Received redes;
+n2 => n1 : ETH (src=:02 dst=:01) \n IP (src=10.0.0.2 dst=10.0.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo reply (data=redes); 
+n1 rbox n1 : Received redes;
+
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo1.txt n1 n3 redes
+['simulador.py', 'topo1.txt', 'n1', 'n3', 'redes']
+n1 box n1 : ETH (src=:01 dst=:FF) \n ARP - Who has 10.0.0.3? Tell 10.0.0.1;
+r1 => n1 : ETH (src=:03 dst=:01) \n ARP - 10.0.0.3 is at :03;
+n1 => r1 : ETH (src=:01 dst=:03) \n IP (src=10.0.0.1 dst=10.20.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=redes); 
+r1 box r1 : ETH (src=:02 dst=:FF) \n ARP - Who has 10.20.0.1? Tell 10.20.0.2;
+n3 => r1 : ETH (src=:01 dst=:02) \n ARP - 10.20.0.1 is at :01;
+r1 => n3 : ETH (src=:02 dst=:01) \n IP (src=10.0.0.1 dst=10.20.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=redes); 
+n3 rbox n3 : Received redes;
+n3 => r1 : ETH (src=:01 dst=:02) \n IP (src=10.20.0.1 dst=10.0.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo reply (data=redes); 
+r1 => n1 : ETH (src=:03 dst=:01) \n IP (src=10.20.0.1 dst=10.0.0.1 ttl=7 mf=0 off=0) \n ICMP - Echo reply (data=redes); 
+n1 rbox n1 : Received redes;
+
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo1.txt n2 n3 computador
+['simulador.py', 'topo1.txt', 'n2', 'n3', 'computador']
+n2 box n2 : ETH (src=:02 dst=:FF) \n ARP - Who has 10.0.0.3? Tell 10.0.0.2;
+r1 => n2 : ETH (src=:03 dst=:02) \n ARP - 10.0.0.3 is at :03;
+n2 => r1 : ETH (src=:02 dst=:03) \n IP (src=10.0.0.2 dst=10.20.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=compu); 
+n2 => r1 : ETH (src=:02 dst=:03) \n IP (src=10.0.0.2 dst=10.20.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo request (data=tador); 
+r1 box r1 : ETH (src=:02 dst=:FF) \n ARP - Who has 10.20.0.1? Tell 10.20.0.2;
+n3 => r1 : ETH (src=:01 dst=:02) \n ARP - 10.20.0.1 is at :01;
+r1 => n3 : ETH (src=:02 dst=:01) \n IP (src=10.0.0.2 dst=10.20.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=compu); 
+r1 => n3 : ETH (src=:02 dst=:01) \n IP (src=10.0.0.2 dst=10.20.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo request (data=tador); 
+n3 rbox n3 : Received computador;
+n3 => r1 : ETH (src=:01 dst=:02) \n IP (src=10.20.0.1 dst=10.0.0.2 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=compu); 
+n3 => r1 : ETH (src=:01 dst=:02) \n IP (src=10.20.0.1 dst=10.0.0.2 ttl=8 mf=0 off=5) \n ICMP - Echo reply (data=tador); 
+r1 => n2 : ETH (src=:03 dst=:02) \n IP (src=10.20.0.1 dst=10.0.0.2 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=compu); 
+r1 => n2 : ETH (src=:03 dst=:02) \n IP (src=10.20.0.1 dst=10.0.0.2 ttl=7 mf=0 off=5) \n ICMP - Echo reply (data=tador); 
+n2 rbox n2 : Received computador;
+
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo2.txt n1 n2 computador
+['simulador.py', 'topo2.txt', 'n1', 'n2', 'computador']
+n1 box n1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.0.0.2? Tell 150.0.0.1;
+r1 => n1 : ETH (src=:02 dst=:01) \n ARP - 150.0.0.2 is at :02;
+n1 => r1 : ETH (src=:01 dst=:02) \n IP (src=150.0.0.1 dst=150.10.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=computador); 
+r1 box r1 : ETH (src=:02 dst=:FF) \n ARP - Who has 150.10.0.1? Tell 150.10.0.2;
+n2 => r1 : ETH (src=:01 dst=:02) \n ARP - 150.10.0.1 is at :01;
+r1 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.10.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=computa); 
+r1 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.10.0.1 ttl=8 mf=0 off=7) \n ICMP - Echo request (data=dor); 
+n2 rbox n2 : Received computador;
+n2 => r1 : ETH (src=:01 dst=:02) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=computa); 
+n2 => r1 : ETH (src=:01 dst=:02) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=8 mf=0 off=7) \n ICMP - Echo reply (data=dor); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=computa); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=7 mf=0 off=7) \n ICMP - Echo reply (data=dor); 
+n1 rbox n1 : Received computador;
+r1 box r1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.10.0.1? Tell 150.20.0.1;
+n2 => r1 : ETH (src=:01 dst=:01) \n ARP - 150.10.0.1 is at :01;
+r1 => n2 : ETH (src=:01 dst=:01) \n IP (src=150.0.0.1 dst=150.10.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=computa); 
+r1 => n2 : ETH (src=:01 dst=:01) \n IP (src=150.0.0.1 dst=150.10.0.1 ttl=8 mf=0 off=7) \n ICMP - Echo request (data=dor); 
+n2 rbox n2 : Received computador;
+n2 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=computa); 
+n2 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=8 mf=0 off=7) \n ICMP - Echo reply (data=dor); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=computa); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=7 mf=0 off=7) \n ICMP - Echo reply (data=dor); 
+n1 rbox n1 : Received computador;
+r2 box r2 : ETH (src=:02 dst=:FF) \n ARP - Who has 150.10.0.1? Tell 150.20.0.2;
+n2 => r2 : ETH (src=:01 dst=:02) \n ARP - 150.10.0.1 is at :01;
+r2 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.10.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=computa); 
+r2 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.10.0.1 ttl=8 mf=0 off=7) \n ICMP - Echo request (data=dor); 
+n2 rbox n2 : Received computador;
+n2 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=computa); 
+n2 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.10.0.1 dst=150.0.0.1 ttl=8 mf=0 off=7) \n ICMP - Echo reply (data=dor); 
+Traceback (most recent call last):
+  File "simulador.py", line 306, in <module>
+    main(source, destiny, message)
+  File "simulador.py", line 298, in main
+    ICMP_EchoReplyRouter(echo_reply_responses, IP_source)
+  File "simulador.py", line 253, in ICMP_EchoReplyRouter
+    response.printResponse()
+  File "/Users/ada/Desktop/T3/classes.py", line 105, in printResponse
+    ") \\n ICMP - Echo reply (data=" + self.data + "); ")
+TypeError: can only concatenate str (not "int") to str
+
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo2.txt n1 n3 computador
+['simulador.py', 'topo2.txt', 'n1', 'n3', 'computador']
+n1 box n1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.0.0.2? Tell 150.0.0.1;
+r1 => n1 : ETH (src=:02 dst=:01) \n ARP - 150.0.0.2 is at :02;
+n1 => r1 : ETH (src=:01 dst=:02) \n IP (src=150.0.0.1 dst=150.30.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=computador); 
+r1 box r1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.30.0.1? Tell 150.20.0.1;
+n3 => r1 : ETH (src=:01 dst=:01) \n ARP - 150.30.0.1 is at :01;
+r1 => n3 : ETH (src=:01 dst=:01) \n IP (src=150.0.0.1 dst=150.30.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=compu); 
+r1 => n3 : ETH (src=:01 dst=:01) \n IP (src=150.0.0.1 dst=150.30.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo request (data=tador); 
+n3 rbox n3 : Received computador;
+n3 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.30.0.1 dst=150.0.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=compu); 
+n3 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.30.0.1 dst=150.0.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo reply (data=tador); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.30.0.1 dst=150.0.0.1 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=compu); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.30.0.1 dst=150.0.0.1 ttl=7 mf=0 off=5) \n ICMP - Echo reply (data=tador); 
+n1 rbox n1 : Received computador;
+r2 box r2 : ETH (src=:02 dst=:FF) \n ARP - Who has 150.30.0.1? Tell 150.30.0.2;
+n3 => r2 : ETH (src=:01 dst=:02) \n ARP - 150.30.0.1 is at :01;
+r2 => n3 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.30.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=compu); 
+r2 => n3 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.30.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo request (data=tador); 
+n3 rbox n3 : Received computador;
+n3 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.30.0.1 dst=150.0.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=compu); 
+n3 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.30.0.1 dst=150.0.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo reply (data=tador); 
+Traceback (most recent call last):
+  File "simulador.py", line 306, in <module>
+    main(source, destiny, message)
+  File "simulador.py", line 298, in main
+    ICMP_EchoReplyRouter(echo_reply_responses, IP_source)
+  File "simulador.py", line 253, in ICMP_EchoReplyRouter
+    response.printResponse()
+  File "/Users/ada/Desktop/T3/classes.py", line 105, in printResponse
+    ") \\n ICMP - Echo reply (data=" + self.data + "); ")
+TypeError: can only concatenate str (not "int") to str
+
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo2.txt n1 n4 computador
+['simulador.py', 'topo2.txt', 'n1', 'n4', 'computador']
+n1 box n1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.0.0.2? Tell 150.0.0.1;
+r1 => n1 : ETH (src=:02 dst=:01) \n ARP - 150.0.0.2 is at :02;
+n1 => r1 : ETH (src=:01 dst=:02) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=computador); 
+r1 box r1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.50.0.1? Tell 150.20.0.1;
+n4 => r1 : ETH (src=:01 dst=:01) \n ARP - 150.50.0.1 is at :01;
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=com); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo request (data=put); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo request (data=ado); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo request (data=r); 
+n4 rbox n4 : Received computador;
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=com); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo reply (data=put); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo reply (data=ado); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo reply (data=r); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=com); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=7 mf=1 off=3) \n ICMP - Echo reply (data=put); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=7 mf=1 off=6) \n ICMP - Echo reply (data=ado); 
+r1 => n1 : ETH (src=:02 dst=:01) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=7 mf=0 off=9) \n ICMP - Echo reply (data=r); 
+n1 rbox n1 : Received computador;
+r2 box r2 : ETH (src=:02 dst=:FF) \n ARP - Who has 150.50.0.1? Tell 150.20.0.2;
+n4 => r2 : ETH (src=:01 dst=:02) \n ARP - 150.50.0.1 is at :01;
+r2 => n4 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=com); 
+r2 => n4 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo request (data=put); 
+r2 => n4 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo request (data=ado); 
+r2 => n4 : ETH (src=:02 dst=:01) \n IP (src=150.0.0.1 dst=150.50.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo request (data=r); 
+n4 rbox n4 : Received computador;
+n4 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=com); 
+n4 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo reply (data=put); 
+n4 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo reply (data=ado); 
+n4 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.50.0.1 dst=150.0.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo reply (data=r); 
+Traceback (most recent call last):
+  File "simulador.py", line 306, in <module>
+    main(source, destiny, message)
+  File "simulador.py", line 298, in main
+    ICMP_EchoReplyRouter(echo_reply_responses, IP_source)
+  File "simulador.py", line 253, in ICMP_EchoReplyRouter
+    response.printResponse()
+  File "/Users/ada/Desktop/T3/classes.py", line 105, in printResponse
+    ") \\n ICMP - Echo reply (data=" + self.data + "); ")
+TypeError: can only concatenate str (not "int") to str
+
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo2.txt n2 n3 computador
+['simulador.py', 'topo2.txt', 'n2', 'n3', 'computador']
+n2 box n2 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.10.0.2? Tell 150.10.0.1;
+r1 => n2 : ETH (src=:02 dst=:01) \n ARP - 150.10.0.2 is at :02;
+n2 => r1 : ETH (src=:01 dst=:02) \n IP (src=150.10.0.1 dst=150.30.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=computador); 
+r1 box r1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.30.0.1? Tell 150.20.0.1;
+n3 => r1 : ETH (src=:01 dst=:01) \n ARP - 150.30.0.1 is at :01;
+r1 => n3 : ETH (src=:01 dst=:01) \n IP (src=150.10.0.1 dst=150.30.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=compu); 
+r1 => n3 : ETH (src=:01 dst=:01) \n IP (src=150.10.0.1 dst=150.30.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo request (data=tador); 
+n3 rbox n3 : Received computador;
+n3 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.30.0.1 dst=150.10.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=compu); 
+n3 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.30.0.1 dst=150.10.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo reply (data=tador); 
+r1 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.30.0.1 dst=150.10.0.1 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=compu); 
+r1 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.30.0.1 dst=150.10.0.1 ttl=7 mf=0 off=5) \n ICMP - Echo reply (data=tador); 
+n2 rbox n2 : Received computador;
+r2 box r2 : ETH (src=:02 dst=:FF) \n ARP - Who has 150.30.0.1? Tell 150.30.0.2;
+n3 => r2 : ETH (src=:01 dst=:02) \n ARP - 150.30.0.1 is at :01;
+r2 => n3 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.30.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=compu); 
+r2 => n3 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.30.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo request (data=tador); 
+n3 rbox n3 : Received computador;
+n3 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.30.0.1 dst=150.10.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=compu); 
+n3 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.30.0.1 dst=150.10.0.1 ttl=8 mf=0 off=5) \n ICMP - Echo reply (data=tador); 
+Traceback (most recent call last):
+  File "simulador.py", line 306, in <module>
+    main(source, destiny, message)
+  File "simulador.py", line 298, in main
+    ICMP_EchoReplyRouter(echo_reply_responses, IP_source)
+  File "simulador.py", line 253, in ICMP_EchoReplyRouter
+    response.printResponse()
+  File "/Users/ada/Desktop/T3/classes.py", line 105, in printResponse
+    ") \\n ICMP - Echo reply (data=" + self.data + "); ")
+TypeError: can only concatenate str (not "int") to str
+
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo2.txt n2 n4 computador
+['simulador.py', 'topo2.txt', 'n2', 'n4', 'computador']
+n2 box n2 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.10.0.2? Tell 150.10.0.1;
+r1 => n2 : ETH (src=:02 dst=:01) \n ARP - 150.10.0.2 is at :02;
+n2 => r1 : ETH (src=:01 dst=:02) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=computador); 
+r1 box r1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.50.0.1? Tell 150.20.0.1;
+n4 => r1 : ETH (src=:01 dst=:01) \n ARP - 150.50.0.1 is at :01;
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=com); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo request (data=put); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo request (data=ado); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo request (data=r); 
+n4 rbox n4 : Received computador;
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=com); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo reply (data=put); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo reply (data=ado); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo reply (data=r); 
+r1 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=com); 
+r1 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=7 mf=1 off=3) \n ICMP - Echo reply (data=put); 
+r1 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=7 mf=1 off=6) \n ICMP - Echo reply (data=ado); 
+r1 => n2 : ETH (src=:02 dst=:01) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=7 mf=0 off=9) \n ICMP - Echo reply (data=r); 
+n2 rbox n2 : Received computador;
+r2 box r2 : ETH (src=:02 dst=:FF) \n ARP - Who has 150.50.0.1? Tell 150.20.0.2;
+n4 => r2 : ETH (src=:01 dst=:02) \n ARP - 150.50.0.1 is at :01;
+r2 => n4 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=com); 
+r2 => n4 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo request (data=put); 
+r2 => n4 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo request (data=ado); 
+r2 => n4 : ETH (src=:02 dst=:01) \n IP (src=150.10.0.1 dst=150.50.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo request (data=r); 
+n4 rbox n4 : Received computador;
+n4 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=com); 
+n4 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo reply (data=put); 
+n4 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo reply (data=ado); 
+n4 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.50.0.1 dst=150.10.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo reply (data=r); 
+Traceback (most recent call last):
+  File "simulador.py", line 306, in <module>
+    main(source, destiny, message)
+  File "simulador.py", line 298, in main
+    ICMP_EchoReplyRouter(echo_reply_responses, IP_source)
+  File "simulador.py", line 253, in ICMP_EchoReplyRouter
+    response.printResponse()
+  File "/Users/ada/Desktop/T3/classes.py", line 105, in printResponse
+    ") \\n ICMP - Echo reply (data=" + self.data + "); ")
+TypeError: can only concatenate str (not "int") to str
+
+ada@MacBook-Pro-de-Maria-3 T3 % python3 simulador.py topo2.txt n3 n4 computador
+['simulador.py', 'topo2.txt', 'n3', 'n4', 'computador']
+n3 box n3 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.30.0.2? Tell 150.30.0.1;
+r2 => n3 : ETH (src=:02 dst=:01) \n ARP - 150.30.0.2 is at :02;
+n3 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.30.0.1 dst=150.50.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=computa); 
+n3 => r2 : ETH (src=:01 dst=:02) \n IP (src=150.30.0.1 dst=150.50.0.1 ttl=8 mf=0 off=7) \n ICMP - Echo request (data=dor); 
+r1 box r1 : ETH (src=:01 dst=:FF) \n ARP - Who has 150.50.0.1? Tell 150.20.0.1;
+n4 => r1 : ETH (src=:01 dst=:01) \n ARP - 150.50.0.1 is at :01;
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.30.0.1 dst=150.50.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=com); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.30.0.1 dst=150.50.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo request (data=put); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.30.0.1 dst=150.50.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo request (data=ado); 
+r1 => n4 : ETH (src=:01 dst=:01) \n IP (src=150.30.0.1 dst=150.50.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo request (data=r); 
+n4 rbox n4 : Received computador;
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.30.0.1 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=com); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.30.0.1 ttl=8 mf=1 off=3) \n ICMP - Echo reply (data=put); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.30.0.1 ttl=8 mf=1 off=6) \n ICMP - Echo reply (data=ado); 
+n4 => r1 : ETH (src=:01 dst=:01) \n IP (src=150.50.0.1 dst=150.30.0.1 ttl=8 mf=0 off=9) \n ICMP - Echo reply (data=r); 
+Traceback (most recent call last):
+  File "simulador.py", line 306, in <module>
+    main(source, destiny, message)
+  File "simulador.py", line 298, in main
+    ICMP_EchoReplyRouter(echo_reply_responses, IP_source)
+  File "simulador.py", line 253, in ICMP_EchoReplyRouter
+    response.printResponse()
+  File "/Users/ada/Desktop/T3/classes.py", line 105, in printResponse
+    ") \\n ICMP - Echo reply (data=" + self.data + "); ")
+TypeError: can only concatenate str (not "int") to str
+ada@MacBook-Pro-de-Maria-3 T3 % 
