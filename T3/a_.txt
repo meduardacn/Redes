@@ -11,7 +11,6 @@
 #r1, 192.168.0.0/24, 0.0.0.0, 0
 #r1, 192.168.1.0/24, 0.0.0.0, 1
 
-                src=192.168.0.2 dst=192.168.1.2
 $ simulador topologia.txt n1 n3 hello
 n1 box n1 : ETH (src=00:00:00:00:00:01 dst=FF:FF:FF:FF:FF:FF) \n ARP - Who has 192.168.0.1? Tell 192.168.0.2;
 r1 => n1 : ETH (src=00:00:00:00:00:05 dst=00:00:00:00:00:01) \n ARP - 192.168.0.1 is at 00:00:00:00:00:05;
@@ -64,19 +63,17 @@ r1 => n1 : ETH (src=:05 dst=:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf
 n1 rbox n1 : Received helloworld;
 
  
-
-
-  
-r1 rbox r1 : Received helloworld;
-r1 => n1 : ETH (src=:06 dst=:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=hello); 
-r1 => n1 : ETH (src=:06 dst=:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=8 mf=0 off=5) \n ICMP - Echo reply (data=world); 
-n1 rbox n1 : Received helloworld;
-r1 => n3 : ETH (src=:06 dst=:03) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=7 mf=1 off=0) \n ICMP - Echo request (data=hello); 
-r1 => n3 : ETH (src=:06 dst=:03) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=7 mf=0 off=5) \n ICMP - Echo request (data=world); 
+n1 box n1 : ETH (src=:01 dst=:FF) \n ARP - Who has 192.168.0.1? Tell 192.168.0.2;
+r1 => n1 : ETH (src=:05 dst=:01) \n ARP - 192.168.0.1 is at :05;
+n1 => r1 : ETH (src=:01 dst=:05) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=hello); 
+n1 => r1 : ETH (src=:01 dst=:05) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=8 mf=0 off=5) \n ICMP - Echo request (data=world); 
+r1 box r1 : ETH (src=:06 dst=:FF) \n ARP - Who has 192.168.1.2? Tell 192.168.1.1;
+n3 => r1 : ETH (src=:03 dst=:06) \n ARP - 192.168.1.2 is at :03;
+r1 => n3 : ETH (src=:06 dst=:03) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=8 mf=1 off=0) \n ICMP - Echo request (data=hello); 
+r1 => n3 : ETH (src=:06 dst=:03) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=8 mf=0 off=5) \n ICMP - Echo request (data=world); 
 n3 rbox n3 : Received helloworld;
-n3 => r1 : ETH (src=:03 dst=:06) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=hello); 
-n3 => r1 : ETH (src=:03 dst=:06) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=0 off=5) \n ICMP - Echo reply (data=world); 
-r1 rbox r1 : Received helloworld;
-r1 => n1 : ETH (src=:06 dst=:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=hello); 
-r1 => n1 : ETH (src=:06 dst=:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=0 off=5) \n ICMP - Echo reply (data=world); 
+n3 => r1 : ETH (src=:03 dst=:06) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=8 mf=1 off=0) \n ICMP - Echo reply (data=hello); 
+n3 => r1 : ETH (src=:03 dst=:06) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=8 mf=0 off=5) \n ICMP - Echo reply (data=world); 
+r1 => n1 : ETH (src=:05 dst=:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=1 off=0) \n ICMP - Echo reply (data=hello); 
+r1 => n1 : ETH (src=:05 dst=:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=0 off=5) \n ICMP - Echo reply (data=world); 
 n1 rbox n1 : Received helloworld;

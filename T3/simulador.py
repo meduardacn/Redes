@@ -121,7 +121,6 @@ def ARPRequestRouter(routerName, port, echo_request_responses):
     ttl = 8
     return response
 
-
 def ARPReply(arp_request_response):
     global nodes
     global router
@@ -229,18 +228,30 @@ def ICMP_EchoReply(echo_request_responses, IP_source):
 
 
 def ICMP_EchoReplyRouter(echo_reply_responses, IP_source):
-    
+    global nodes
+    global router
+    global ttl
+    destElem, MAC_src = None, 0
+    for elem in nodes:
+        if echo_reply_responses[0].IP_dst in elem.ip_prefix:
+            destElem = elem
+            break
+    network = mask(destElem.ip_prefix)
+    for elem in router:
+        if elem.name == echo_reply_responses[0].dst_name:
+            for group in elem.node_routers:
+                if mask(destElem.ip_prefix) in group.ip_prefix:
+                    MAC_src = group.mac[-3:]
+                    break
     responses = []
-    
     for elem in echo_reply_responses:
         for node in nodes:
             if elem.IP_dst in node.ip_prefix:
-                #change mac
-
-                response = ICMP_Echo_Reply_response(elem.dst_name, node.name, elem.MAC_dst, node.mac[-3:],
-                                                                    elem.IP_src, elem.IP_dst, elem.TTL, elem.mf_flag, elem.offset, elem.data)
+                response = ICMP_Echo_Reply_response(elem.dst_name, node.name, MAC_src, node.mac[-3:],
+                                                                    elem.IP_src, elem.IP_dst, ttl, elem.mf_flag, elem.offset, elem.data)
                 response.printResponse()
                 responses.append(response)
+
     if IP_source in responses[0].IP_dst:
         message = ""
         for elem in responses:
