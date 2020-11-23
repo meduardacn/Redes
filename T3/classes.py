@@ -105,6 +105,3 @@ class ICMP_Echo_Reply_response:
         print(self.src_name + " => " + self.dst_name + " : ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
               ") \\n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) + " mf=" + str(self.mf_flag) + " off=" + str(self.offset) +
               ") \\n ICMP - Echo reply (data=" + self.data + "); ")
-
-
-
