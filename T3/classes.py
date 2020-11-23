@@ -84,9 +84,7 @@ class ICMP_Echo_Request_response:
         self.data = data
 
     def printResponse(self):
-        print(self.src_name + " => " + self.dst_name + " : ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst +
-              ") \\n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) +  " mf="+ str(self.mf_flag) + " off=" + str(self.offset) + 
-              ") \\n ICMP - Echo request (data=" + self.data + "); ")
+        print(self.src_name + " => " + self.dst_name + " : ETH (src=" + self.MAC_src + " dst=" + self.MAC_dst + ") \\n IP (src=" + self.IP_src + " dst=" + self.IP_dst + " ttl=" + str(self.TTL) +  " mf="+ str(self.mf_flag) + " off=" + str(self.offset) + ") \\n ICMP - Echo request (data=" + self.data + "); ")
 
 class ICMP_Echo_Reply_response:
     def __init__(self, src_name, dst_name, MAC_src, MAC_dst, IP_src, IP_dst, TTL, mf_flag, offset, data):

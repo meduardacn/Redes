@@ -105,6 +105,21 @@ def ARPRequest(source, destiny):
     response.printResponse()
     return response
 
+def ARPRequestRouter(routerName, port, echo_request_responses):
+    global router
+    routerElem = None
+
+    for elem in router:
+        if elem.name == routerName:
+            routerElem = elem
+    route = routerElem.node_routers[int(port)]  
+    routeIP = route.ip_prefix.split("/")
+    response = ARP_Request_response(
+        routerName, route.mac[-3:], ":FF", echo_request_responses[0].IP_dst, routeIP[0])
+    response.printResponse()
+    return response
+
+
 def ARPReply(arp_request_response):
     global nodes
     global router
@@ -143,26 +158,31 @@ def ARPReply(arp_request_response):
                 break
     return(response)     
 
-def ICMP_EchoRequest(src_name, dst_name, MAC_dst, message, IP_source, IP_destiny):
+def ICMP_EchoRequest(src_name, dst_name, MAC_dst, message, IP_source, IP_destiny, port):
     global nodes
     global router
+    global tll
 
     allElements = nodes+router
-    sourceElem, destinyElem, mtu = None, None, 0
+    sourceElem, destinyElem, mtu, MAC_src ,= None, None, 0, 0
     for elem in allElements:
         if elem.name == src_name:
             sourceElem = elem
         elif elem.name == dst_name:
             destinyElem = elem
     # se sourceElem for 'router' muda a lógica
-    # if 'r' in sourceElem.name:
-    #     sourceElem.node_routers
-    #     #verificar porta de saida
-    #     MAC_src =  None
+    if 'r' in sourceElem.name:
+        #verificar porta de saida
+        route = sourceElem.node_routers[int(port)]
+        MAC_src = route.mac[-3:]
+    else:
+        MAC_src = sourceElem.mac[-3:]
     if 'r' in destinyElem.name:
         mtu = int(destinyElem.node_routers[0].mtu)
+        MAC_src = sourceElem.mac[-3:]
     else:
         mtu = int(destinyElem.mtu)
+
     responses ,response = [], None
     i = 0
     if len(message) >= mtu:
@@ -171,11 +191,11 @@ def ICMP_EchoRequest(src_name, dst_name, MAC_dst, message, IP_source, IP_destiny
                 mf = 1
             else:
                 mf = 0
-            response = ICMP_Echo_Request_response(
-                sourceElem.name, destinyElem.name, sourceElem.mac[-3:], MAC_dst, IP_source, IP_destiny, 8, mf, i, message[i:i+mtu])
+            response = ICMP_Echo_Request_response(sourceElem.name, destinyElem.name, MAC_src, MAC_dst, IP_source, IP_destiny, str(tll), str(mf), str(i), str(message[i:i+mtu]))
+            tll -= 1
             response.printResponse()
             responses.append(response)
-            i += mtu
+            i += mtu 
     if 'n' in destinyElem.name:
         if IP_destiny in destinyElem.ip_prefix:
             message = ""
@@ -200,8 +220,13 @@ def ICMP_EchoReply(echo_request_responses, IP_source):
             message += elem.data
         print(responses[0].dst_name + " rbox " + responses[0].dst_name +
               " : Received " + message + ";")
-        return True, response
-    return False, response
+        
+        return True, responses
+    return False, responses
+
+
+def ICMP_EchoReplyRouter(echo_request_responses, IP_source):
+    pass
 
 def main(source, destiny, message):
     global nodes
@@ -221,25 +246,43 @@ def main(source, destiny, message):
     arp_request_response = ARPRequest(source, destiny)
     arp_reply_response   = ARPReply(arp_request_response)
     ended, echo_request_responses = ICMP_EchoRequest(
-        arp_reply_response.dst_name, arp_reply_response.src_name, arp_reply_response.MAC_src, message, IP_source, IP_destiny)
+        arp_reply_response.dst_name, arp_reply_response.src_name, arp_reply_response.MAC_src, message, IP_source, IP_destiny,0)
     
     if ended:
-        received, response = ICMP_EchoReply(echo_request_responses, IP_source)
+        received, echo_reply_responses = ICMP_EchoReply(
+            echo_request_responses, IP_source)
     else:
-        for elem in echo_request_responses:
-            IP_dst = elem.IP_dst
-            for group in routertable:
-                if mask(group.dest_prefix) in IP_dst:
-                    print(group.printRoutertable())
-                    print(IP_dst, group.dest_prefix)
+        resp = echo_request_responses[0]
+        IP_dst = resp.IP_dst
+        for group in routertable:
+            if mask(group.dest_prefix) in IP_dst:
+                arp_request_response = ARPRequestRouter(group.name, group.port,echo_request_responses)
+                arp_reply_response = ARPReply(arp_request_response)
+                for elem in echo_request_responses:
+                    ended, echo_request_responses = ICMP_EchoRequest(
+                        arp_reply_response.dst_name, arp_reply_response.src_name, arp_reply_response.MAC_src, message, IP_source, IP_destiny, group.port)
+                    if ended:
+                        received, echo_reply_responses = ICMP_EchoReply(echo_request_responses, IP_source)
+
+                    print()
+                    print("echo_reply_response")
+                    for elem in echo_reply_responses:
+                        for node in nodes:
+                            if elem.IP_dst in node.ip_prefix:
+                                node.printElem()
+                                response = ICMP_Echo_Reply_response(elem.dst_name, node.name, elem.MAC_dst,node.mac[-3:], ,
+                                                            elem.IP_dst, elem.IP_src, elem.TTL, elem.mf_flag, elem.offset, elem.data)
+                        response.printResponse()
 
 data = sys.argv
 topologyFile, source, destiny, message = data[1], data[2], data[3], data[4]
+tll = 8
 print(data)
 nodes, router, routertable = readFile()
 main(source, destiny, message)
 
-# printTopology()   .
+# printTopology()   
+
 # ARP Request
 # ARP Reply 
 # ICMP Echo Request

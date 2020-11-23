@@ -18,11 +18,18 @@ r1 => n1 : ETH (src=:05 dst=:01) \n ARP - 192.168.0.1 is at :05;
 n1 => r1 : ETH (src=:01 dst=:05) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=8 mf=0 off=0) \n ICMP - Echo request (data=hello);
 r1 box r1 : ETH (src=:06 dst=:FF) \n ARP - Who has 192.168.1.2? Tell 192.168.1.1;
 n3 => r1 : ETH (src=:03 dst=:06) \n ARP - 192.168.1.2 is at :03;
+
 r1 => n3 : ETH (src=:06 dst=:03) \n IP (src=192.168.0.2 dst=192.168.1.2 ttl=7 mf=0 off=0) \n ICMP - Echo request (data=hello);
 n3 rbox n3 : Received hello;
 n3 => r1 : ETH (src=:03 dst=:06) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=8 mf=0 off=0) \n ICMP - Echo reply (data=hello);
+
 r1 => n1 : ETH (src=:05 dst=:01) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=0 off=0) \n ICMP - Echo reply (data=hello);
 n1 rbox n1 : Received hello;
+ 
+
+n3 => r1 : ETH (src=:03 dst=:06) \n IP (src=192.168.1.2 dst=192.168.0.2 ttl=7 mf=0 off=0) \n ICMP - Echo reply (data=hello); 
+r1 rbox r1 : Received hello;
+
 
 $ simulador topologia.txt n1 n2 hello
 n1 box n1 : ETH (src=:01 dst=:FF) \n ARP - Who has 192.168.0.3? Tell 192.168.0.2;
