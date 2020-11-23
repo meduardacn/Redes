@@ -229,11 +229,14 @@ def ICMP_EchoReply(echo_request_responses, IP_source):
 
 
 def ICMP_EchoReplyRouter(echo_reply_responses, IP_source):
+    
     responses = []
+    
     for elem in echo_reply_responses:
         for node in nodes:
             if elem.IP_dst in node.ip_prefix:
                 #change mac
+
                 response = ICMP_Echo_Reply_response(elem.dst_name, node.name, elem.MAC_dst, node.mac[-3:],
                                                                     elem.IP_src, elem.IP_dst, elem.TTL, elem.mf_flag, elem.offset, elem.data)
                 response.printResponse()
@@ -290,27 +293,4 @@ print(data)
 nodes, router, routertable = readFile()
 main(source, destiny, message)
 
-# printTopology()   
-
-# ARP Request
-# ARP Reply 
-# ICMP Echo Request
-# ICMP Echo Reply
-# ICMP Time Exceeded
-# final do ICMP Echo Request
-
-
-# allElememts = nodes+router
-# src_name = echo_request_response.dst_name
-# dst_name = echo_request_response.src_name
-# MAC_dst = ""
-# for elem in allElememts:
-#     if elem.name == src_name:
-#         for arp in elem.arp_table:
-#             if arp[0] in IP_source:
-#                 MAC_dst = arp[1]
-#                 break
-# if MAC_dst
-
-# self.MAC_src = MAC_src
-# self.MAC_dst = MAC_dst
+# printTopology()
