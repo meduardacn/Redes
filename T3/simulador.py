@@ -65,8 +65,16 @@ def printTopology():
         elem.printRoutertable()
     print("")
 
-def verifyMask():
-    pass
+
+def mask(ip_prefix): 
+    ip = ip_prefix.split("/")
+    mask = int(ip[1])/8
+    ip = ip[0].split(".")
+    network, i = "", 0
+    while i < mask:
+        network += ip[i] + '.'
+        i += 1
+    return network[:-1]
 
 def ARPRequest(source, destiny):
     global nodes
@@ -83,17 +91,8 @@ def ARPRequest(source, destiny):
         elif elem.name == destiny:
             destinyNode = elem
 
-    ip = sourceNode.ip_prefix.split("/")
-    mask = int(ip[1])/8
-    ip = ip[0].split(".")
-    network , i = "", 0 
-    while i < mask:
-        network +=  ip[i] +'.'
-        i += 1
-    network =  network[:-1]
-
     # o ip destino é conhecido, possuem o mesma mascara
-    if  network in destinyNode.ip_prefix:
+    if mask(sourceNode.ip_prefix) in destinyNode.ip_prefix:
         IP_dst = destinyNode.ip_prefix
     else:
     # o ip destino é desconhecido, não possuem a mesma mascara
@@ -230,9 +229,9 @@ def main(source, destiny, message):
         for elem in echo_request_responses:
             IP_dst = elem.IP_dst
             for group in routertable:
-                print(IP_dst, group.dest_prefix)
-                #verify mask
-
+                if mask(group.dest_prefix) in IP_dst:
+                    print(group.printRoutertable())
+                    print(IP_dst, group.dest_prefix)
 
 data = sys.argv
 topologyFile, source, destiny, message = data[1], data[2], data[3], data[4]
@@ -240,7 +239,7 @@ print(data)
 nodes, router, routertable = readFile()
 main(source, destiny, message)
 
-printTopology()  
+# printTopology()   .
 # ARP Request
 # ARP Reply 
 # ICMP Echo Request
